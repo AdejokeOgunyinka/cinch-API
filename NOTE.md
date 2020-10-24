@@ -1,3 +1,40 @@
+## Move commits to prod repository
+
+```bash
+# Dev Repo  :>> Cinch API repository on Decadevs organization
+# Prod Repo :>> Cinch API repository on DecagonHQ organization
+
+# Ensure to be on the main branch of the prod repo before running
+# any of the below commands
+
+git checkout main
+
+# Ensure the dev repo has been added as a remote to the
+# prod repo with name dev-origin or you manually do it
+# with the below command
+
+git remote add dev-origin https://github.com/decadevs/cinch-api-dev
+
+# Pull all changes from the main branch of the dev repo into the
+# main branch of the prod repo
+
+git pull dev-origin main
+
+# Confirm that commit history on prod repo's main branch is exactly
+# the same as that on the dev repo's main branch
+
+git log
+
+# Push all latest changes to upstream branch { main }
+
+git push
+
+```
+
+#### Ensure to be on the main branch of the main repo
+
+# Manually push after confirming 
+
 ## Docker compose bind mounts
 
 Bind mount only works well when what is on host is expected to overwrite what is in the container and not the other way round
