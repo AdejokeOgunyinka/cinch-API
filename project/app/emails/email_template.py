@@ -10,4 +10,3 @@ def email_template(subject, mail_to, html_message):
     email_to = [mail_to]
 
     send_mail(email_subject, message, email_from, email_to, fail_silently=False, html_message=html_format)
-
