@@ -1,4 +1,4 @@
-## Aboout
+## About
 
 Data Access Objects (DAOs) are classes that defines query methods for fetching data from and inserting into the database. Note that using this pattern means that we are adding another layer on top of our actual data layer and doing this ensures that updates to the defined methods' implementations on how data should be fetched or inserted does not break the application at large when and hence promotes replacability of our data layer
 
@@ -19,12 +19,12 @@ class ArtistsDAO:
     def fetch_all_artists(cls):
         artists = Artist.objects.all()
         return ArtistSerializer(artists, many=True).data
-    
+
     @classmethod
     def fetch_top_artists(cls):
         artists = Artist.objects.filter(...)
         return ArtistSerializer(artists, many=True).data
-    
+
     @classmethod
     def create_author(cls, first_name, last_name):
         artist = Artist.create(first_name=first_name, last_name=last_name)
