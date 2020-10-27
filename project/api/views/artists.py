@@ -9,4 +9,5 @@ class ArtistsViewSet(ViewSet):
 
     @action(methods=['put'], detail=False, url_path='*')
     def update_profile(self, request):
-        return Response.create(dict(sample='Update Artist Profile Details'))
+        data = dict(sample='Update Artist Profile Details')
+        return Response(data)

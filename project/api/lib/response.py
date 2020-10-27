@@ -1,14 +1,11 @@
-from rest_framework import status
 from rest_framework.response import Response as DRFResponse
 
 
 class InvalidResponse(Exception):
     pass
 
-
 class Response:
-    @classmethod
-    def create(cls, data=None, errors=None, *args, **kwargs):
+    def __new__(cls, data=None, errors=None, *args, **kwargs):
         payload = cls.format(data, errors)
         return DRFResponse(payload, *args, **kwargs)
 

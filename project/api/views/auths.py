@@ -6,8 +6,10 @@ from api.lib.response import Response
 class AuthsViewSet(ViewSet):
     @action(methods=['post'], detail=False)
     def login(self, request):
-        return Response.create(dict(sample='User Login Action'))
+        data = dict(sample='User Login Action')
+        return Response(data)
 
     @action(methods=['post'], detail=False)
     def register(self, request):
-        return Response.create(dict(sample='User Register Action'))
+        data = dict(sample='User Register Action')
+        return Response(data)

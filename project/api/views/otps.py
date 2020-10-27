@@ -5,8 +5,10 @@ from api.lib.response import Response
 class OtpsViewSet(ViewSet):
     @action(methods=['post'], detail=False)
     def send(self, request):
-        return Response.create(dict(sample='Send OTP Email Action'))
+        data = dict(sample='Send OTP Email Action')
+        return Response(data)
 
     @action(methods=['post'], detail=False)
     def verify(self, request):
-        return Response.create(dict(sample='Verify OTP Action'))
+        data = dict(sample='Verify OTP Action')
+        return Response(data)
