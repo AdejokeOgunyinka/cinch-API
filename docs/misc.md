@@ -1,6 +1,14 @@
+## Library
+
+A `project/lib` folder has been created to hold reusable codes for common or generic operations within the project. Note that codes that goes in this folder should be very independent from business logics or Django codes
+
+## Other Services
+
+For the other services namely `notification`, `payment` and `dspa`, the approach to take in ensuring replacability and maintainability will be discuss when implementations requires them.
+
 ## Docker compose bind mounts
 
-Bind mount only works well when what is on host is expected to overwrite what is in the container and not the other way round
+Bind mount make sensewhen what's on the host is expected to overwrite what is in the container and not the other way round
 
 ## Docker compose bind mounts environment variables
 

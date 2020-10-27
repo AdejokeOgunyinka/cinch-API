@@ -1,4 +1,4 @@
-## Introduction
+## About
 
 The app folder houses actions that the api will depend on for handling request. These actions are service objects or simply objects where we define our actual business logics within this project. This is because we do not want business logics to live in Django views as this is a common practice for most projects and MIGHT not make it easy to add more features or maintain the project.
 

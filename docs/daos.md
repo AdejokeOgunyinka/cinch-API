@@ -1,4 +1,4 @@
-## Introduction
+## Aboout
 
 Data Access Objects (DAOs) are classes that defines query methods for fetching data from and inserting into the database. Note that using this pattern means that we are adding another layer on top of our actual data layer and doing this ensures that updates to the defined methods' implementations on how data should be fetched or inserted does not break the application at large when and hence promotes replacability of our data layer
 
