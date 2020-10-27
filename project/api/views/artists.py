@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ViewSet
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action, permission_classes
+from api.lib.response import Response
 
 
 class ArtistsViewSet(ViewSet):
@@ -9,4 +9,4 @@ class ArtistsViewSet(ViewSet):
 
     @action(methods=['put'], detail=False, url_path='*')
     def update_profile(self, request):
-        return Response('Update Artist Profile Details')
+        return Response.create(dict(sample='Update Artist Profile Details'))

@@ -1,7 +1,3 @@
-## Library
-
-A `project/lib` folder has been created to hold reusable codes for common or generic operations within the project. Note that codes that goes in this folder should be very independent from business logics or Django codes
-
 ## Other Services
 
 For the other services namely `notification`, `payment` and `dspa`, the approach to take in ensuring replacability and maintainability will be discuss when implementations requires them.
