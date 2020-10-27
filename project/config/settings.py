@@ -71,6 +71,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+AUTH_USER_MODEL = 'db.User'
+
 DATABASES = {
     'default': dj_database_url.config(conn_max_age=60)
 }
