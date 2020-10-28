@@ -25,6 +25,7 @@ ALLOWED_HOSTS = [] if not ALLOWED_HOSTS_STR else ALLOWED_HOSTS_STR.split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'app',
     'db',
     'api.apps.ApiConfig',
     'rest_framework',

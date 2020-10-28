@@ -34,6 +34,18 @@ result = CreateArtist.call(name='John Doe', gender='Male')
 result.value
 result.error
 
+# def sample_view(request):
+#   current_user = request.user
+#   print
+#   current_user.id        
+
+class M_User(Action):
+    arguments = ['request']
+
+    def current_user(self):
+        cur_user = self.request.user
+        print(cur_user.id)
+
 ```
 
 ## Notes & Caveats

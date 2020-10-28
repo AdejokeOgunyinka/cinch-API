@@ -5,6 +5,15 @@ from rest_framework import status
 from api.lib.response import Response
 from app.passwords_action.password_reset import ResetPassword
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import action, permission_classes
+
+import sys
+from os import path
+sys.path.append(path.join(path.dirname(__file__), '...'))
+from api.lib.response import Response
+from app.password_action import password_update
+# from api.lib.response import Response
+# from ...app.password_action import password_update
 
 
 class PasswordsViewSet(ViewSet):
@@ -12,6 +21,8 @@ class PasswordsViewSet(ViewSet):
     def change(self, request):
         data = dict(sample='Update User Password')
         return Response(data)
+         result = password_update.UpdatePassword.call(request=request)
+         return Response.create(result)
 
     @action(methods=['put'], detail=False, permission_classes=[AllowAny])
     def reset(self, request):
