@@ -8,7 +8,6 @@ from api.lib.response import Response
 from app.auth.register import Register
 from django.contrib.auth import authenticate
 from rest_framework import status
-# from rest_framework.response import Response
 
 
 class AuthsViewSet(ViewSet):
