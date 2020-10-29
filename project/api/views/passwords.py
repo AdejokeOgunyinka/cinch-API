@@ -11,12 +11,13 @@ import sys
 from os import path
 sys.path.append(path.join(path.dirname(__file__), '...'))
 from api.lib.response import Response
-from app.password_action import password_update
-# from api.lib.response import Response
-# from ...app.password_action import password_update
+from app.password_action import password_update_action
 
 
 class PasswordsViewSet(ViewSet):
+    """
+
+    """
     @action(methods=['put'], detail=False, permission_classes=[IsAuthenticated])
     def change(self, request):
         data = dict(sample='Update User Password')

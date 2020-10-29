@@ -19,11 +19,15 @@ class Response:
             errors['_others'] = []
 
         if not data and not errors:
+<<<<<<< HEAD
             raise InvalidResponse('Both data and errors cannot be None')
+=======
+            raise InvalidResponse('Cannot empty')
+>>>>>>> Completed implementation of update password feature
 
         return dict(
             message=message,
-            data=data,
+            data=None,
             errors=errors,
         )
 
