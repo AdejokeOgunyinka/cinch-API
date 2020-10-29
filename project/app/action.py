@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class ActionError(Exception):
-    def __init__(self, message='Execution Failed'):
+    def __init__(self, message):
         super().__init__(message)
         self.value = None
 
@@ -36,7 +36,7 @@ class Action(ABC):
         try:
             value = cls._handle(inputs)
         except Exception as exc:
-            error = ActionError()
+            error = ActionError('Execution Failed')
             error.__cause__ = exc
             error.value = exc.args[0] if exc.args else None
 

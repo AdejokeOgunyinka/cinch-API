@@ -10,19 +10,28 @@ class Response:
         return DRFResponse(payload, *args, **kwargs)
 
     @classmethod
-    def format(cls, data=None, errors=None):
-        data = data if type(data) == dict and len(data) else None
-        errors = errors if type(errors) == dict and len(errors) else None
+    def format(cls, data, errors):
+        data, errors = cls.validate(data, errors)
 
         message = 'success' if data and not errors else 'failure'
 
         if errors and '_others' not in errors:
             errors['_others'] = []
 
-        if not data and not errors: raise InvalidResponse()
+        if not data and not errors:
+            raise InvalidResponse('Both data and errors cannot be None')
 
         return dict(
             message=message,
             data=data,
             errors=errors,
         )
+
+    @classmethod
+    def validate(cls, data, errors):
+        try:
+            data = None if data is None else dict(data)
+            errors = None if errors is None else dict(errors)
+            return (data, errors)
+        except Exception:
+            raise InvalidResponse('None or dict-like structure expected for both data and errors')
