@@ -19,3 +19,4 @@ router.register(r'passwords', PasswordsViewSet, basename='passwords')
 router.register(r'artists', ArtistsViewSet, basename='artists')
 
 urlpatterns = router.urls
+
