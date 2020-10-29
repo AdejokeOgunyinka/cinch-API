@@ -26,7 +26,7 @@ Change directory into the project folder `cd cinch-api-dev` and build the base p
 
 Spin up other services needed for the project that are specified in ***docker-compose.yml*** file by running the command `docker-compose up`. At this moment, your project should be up and running with a warning that *you have unapplied migrations*.
 
-Open up another terminal and run this command `docker-compose exec api python cinch/manage.py makemigrations` for creating new migrations based on the models defined and also run `docker compose exec api python cinch/manage.py migrate` to apply migrations.
+Open up another terminal and run this command `docker-compose exec api python project/manage.py makemigrations` for creating new migrations based on the models defined and also run `docker compose exec api python project/manage.py migrate` to apply migrations.
 
 In summary, these are the lists of commands to run in listed order, to start up the project.
 
@@ -35,8 +35,8 @@ In summary, these are the lists of commands to run in listed order, to start up 
 2. cd cinch-api-dev
 3. docker build .
 4. docker-compose up
-5. docker-compose exec api python cinch/manage.py makemigrations
-6. docker-compose exec api python cinch/manage.py migrate
+5. docker-compose exec api python project/manage.py makemigrations
+6. docker-compose exec api python project/manage.py migrate
 ```
 
 ## Running Tests
@@ -44,7 +44,8 @@ In summary, these are the lists of commands to run in listed order, to start up 
 Currently, truthy tests has been provided in each of the application defined in the project, before running the tests with the following command make sure that your api service is up and running.
 
 ```docker
-docker-compose exec api python cinch/manage.py test
+docker-compose exec api python project/manage.py test
+docker-compose exec api flake8
 ```
 
 ## License
