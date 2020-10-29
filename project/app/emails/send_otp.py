@@ -1,4 +1,4 @@
-from app.action import Action
+from ...app.action import Action
 
 
 class SendOTP(Action):

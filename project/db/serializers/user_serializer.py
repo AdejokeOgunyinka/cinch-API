@@ -5,4 +5,4 @@ from ..models import User
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email']  # update this as necessary
+        exclude = ['created_at', 'updated_at']  # update this as necessary
