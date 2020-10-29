@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class ActionError(Exception):
     def __init__(self, message='Execution Failed'):
         super().__init__(message)
-
+        self.value = None
 
 class ActionResult:
     def __init__(self, value=None, error=None):
@@ -26,19 +26,21 @@ class Action(ABC):
     @abstractmethod
     def perform(self): pass
 
-    def fail(self, message):
-        raise ActionError(message)
+    def fail(self, value):
+        raise ActionError(value)
 
     @classmethod
     def call(cls, **inputs):
+        value = error = None
+
         try:
-            output = cls._handle(inputs)
-            return ActionResult(value=output)
+            value = cls._handle(inputs)
         except Exception as exc:
-            exception = ActionError()
-            exception.actual = exc
-            exception.__cause__ = exc
-            return ActionResult(error=exception)
+            error = ActionError()
+            error.__cause__ = exc
+            error.value = exc.args[0] if exc.args else None
+
+        return ActionResult(value=value, error=error)
 
     @classmethod
     def _handle(cls, inputs):
