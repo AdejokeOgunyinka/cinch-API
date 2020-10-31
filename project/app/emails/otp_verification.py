@@ -4,7 +4,7 @@ from db.serializers.user_serializer import UserSerializer
 
 
 class VerifyEmailVerify(Action):
-    arguments =['email']
+    arguments = ['email']
 
     def perform(self):
         user = UsersDAO.fetch_user_by_email(self.email)
