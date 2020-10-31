@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from db.serializers.user_serializer import UserSerializer
 
 class VerifyEmailVerify(Action):
-    arguments = ['email']
+    arguments =['email']
 
     def perform(self):
         user = get_user_model().objects.get(email=self.email)
