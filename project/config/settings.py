@@ -27,6 +27,7 @@ ALLOWED_HOSTS = [] if not ALLOWED_HOSTS_STR else ALLOWED_HOSTS_STR.split(',')
 INSTALLED_APPS = [
     'db',
     'rest_framework',
+    'phonenumber_field',
     'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',

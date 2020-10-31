@@ -1,8 +1,8 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from ..models.artist import Artist
 
 
-class ArtistSerializer(ModelSerializer):
+class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        exclude = ['created_at', 'updated_at', 'avatar_url']  # update this as necessary
+        fields = '__all__'

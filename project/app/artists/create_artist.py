@@ -1,45 +1,53 @@
+from db.serializers.user_serializer import UserSerializer
+from django.contrib.auth import get_user_model
+
 from app.action import Action
-from daos.user_dao import UsersDAO
-from daos.artists_dao import ArtistsDAO
+from db.models.artist import Artist
 
 
 class CreateArtist(Action):
-    arguments = ['email', 'username', 'firstname', 'lastname', 'phone_number', 'password', 'confirm_password']
+    arguments = ['data']
 
     def perform(self):
 
-        user = {
-            "email": self.email,
-            "username": self.username,
-            "password": self.password,
-            "confirm_password": self.confirm_password
-        }
+        user_serializer = UserSerializer(data=self.data)
+        if not user_serializer.is_valid():
+            self.fail(user_serializer.errors)
 
-        artist = {
-            "firstname": self.firstname,
-            "lastname": self.lastname,
-            "phone_number": self.phone_number
-        }
-        user_password = self.password
-        user_confirm_password = self.confirm_password
-        if user_password != user_confirm_password:
-            raise Exception("Passwords do no match")
+        # call otp function to get an otp
+        otp = '123456'
 
-        user = UsersDAO.create_user(user)
+        # Get all the Data
+        email=self.data.get('email', '')
+        username = self.data.get('username', '')
+        phone_number = self.data.get('phone_number')
+        password = self.data.get('password', '')
+        firstname=self.data.get('first_name', '')
+        lastname=self.data.get('last_name', '')
 
-        if not user:
-            print("i am here")
-            raise Exception("Error creating User")
-        user_id = user["id"]
-        print({"user": user})
-        new_artist_data = {"firstname": self.firstname, "lastname": self.lastname, "phone_number": self.phone_number, "user_id": user_id}
-        print(new_artist_data)
-        artist_data = ArtistsDAO.create_artist(new_artist_data)
-        print({"art": artist})
+        user = get_user_model().objects.create(
+            email=email,
+            username = username,
+            phone_number = phone_number,
+            password = password,
+            otp_code = otp
+        )
+        user.set_password(password)
 
+        artist = Artist.objects.create(
+            user_id = user,
+            firstname=firstname,
+            lastname=lastname,
+        )
+        
+        # save user to db
+        user.save()
 
-        if not artist:
-            raise Exception("Error creating artist")
-
-        return artist_data
-
+        # save artist to db
+        artist.save()
+        
+        return_data = dict(
+            otp=otp, username=username, first_name=firstname, 
+            last_name=lastname, phone_number=phone_number
+        )
+        return return_data
