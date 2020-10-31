@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 from app.action import Action
 from db.models.artist import Artist
+from ..validations.validate_artist import RegisterArtistValidation
 
 
 class Register(Action):
@@ -13,6 +14,8 @@ class Register(Action):
         if not user_serializer.is_valid():
             self.fail(user_serializer.errors)
 
+
+        # call a function to generate OTP
         otp = '123456'
 
         # Get all the Data
@@ -23,14 +26,9 @@ class Register(Action):
         firstname=self.data.get('first_name', '')
         lastname=self.data.get('last_name', '')
 
-        if firstname and len(firstname) <= 2:
-            self.fail(dict(firstname='firstname must be more than two characters'))
-
-        if lastname and len(lastname) <= 2:
-            self.fail(dict(lastname='lastname must be greater than two characters'))
-
-        if username and len(username) <= 2:
-            self.fail(dict(username='username must be greater than two characters'))
+        # Validate fields
+        valid_artist = RegisterArtistValidation.validate_artist(self.data, self.fail)
+        if not valid_artist: return valid_artist
 
         user = get_user_model().objects.create(
             email=email,
