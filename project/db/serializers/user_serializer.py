@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         confirm_password = 'confirm_password' in data and data['confirm_password']
         password_match = data['password'] == data['confirm_password']
         phone_number_valid = 'phone_number' in data and data['phone_number']
+        validate_password(password=data['password'])
 
         errors = {}
         if not confirm_password:

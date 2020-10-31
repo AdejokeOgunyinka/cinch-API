@@ -1,20 +1,18 @@
 from db.serializers.user_serializer import UserSerializer
 from django.contrib.auth import get_user_model
-from app.emails.send_otp import SendOTP
 
 from app.action import Action
+from db.models.artist import Artist
 
 
-class CreateArtist(Action):
+class Register(Action):
     arguments = ['data']
 
     def perform(self):
-
         user_serializer = UserSerializer(data=self.data)
         if not user_serializer.is_valid():
             self.fail(user_serializer.errors)
 
-        # call otp function to get an otp
         otp = '123456'
 
         # Get all the Data
@@ -24,6 +22,15 @@ class CreateArtist(Action):
         password = self.data.get('password', '')
         firstname=self.data.get('first_name', '')
         lastname=self.data.get('last_name', '')
+
+        if firstname and len(firstname) <= 2:
+            self.fail(dict(firstname='firstname must be more than two characters'))
+
+        if lastname and len(lastname) <= 2:
+            self.fail(dict(lastname='lastname must be greater than two characters'))
+
+        if username and len(username) <= 2:
+            self.fail(dict(username='username must be greater than two characters'))
 
         user = get_user_model().objects.create(
             email=email,
@@ -42,14 +49,12 @@ class CreateArtist(Action):
         
         # save user to db
         user.save()
-        SendOTP.call(email=email)
 
         # save artist to db
         artist.save()
-        # SendOTP.call(email=email)
         
         return_data = dict(
             otp=otp, username=username, first_name=firstname, 
-            last_name=lastname, phone_number=phone_number, password=password
+            last_name=lastname, phone_number=phone_number
         )
         return return_data
