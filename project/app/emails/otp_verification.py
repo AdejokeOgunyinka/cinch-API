@@ -1,13 +1,12 @@
 from app.action import Action
-from daos.user_dao import UsersDAO
+from django.contrib.auth import get_user_model
 from db.serializers.user_serializer import UserSerializer
 
-
 class VerifyEmailVerify(Action):
-    arguments = ['email']
+    arguments =['email']
 
     def perform(self):
-        user = UsersDAO.fetch_user_by_email(self.email)
+        user = get_user_model().objects.get(self.email)
         if user and user.email_verified == False:
             user.email_verified = True
             user.save()
