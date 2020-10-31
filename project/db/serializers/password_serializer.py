@@ -12,7 +12,7 @@ class PasswordSerializer(serializers.Serializer):
 
     def validate_old_password(self, value):
         """
-
+        This method validates the old_password
         """
         user = self.context['user']
         if not user.check_password(value):
@@ -21,7 +21,7 @@ class PasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         """
-
+        This method validates the password value is equal to confirm_password value
         """
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError("The two password fields don't match.")
@@ -30,7 +30,7 @@ class PasswordSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         """
-
+        This method saves the password to the user's details
         """
         password = self.validated_data['password']
         user = self.context['user']
