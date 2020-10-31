@@ -24,7 +24,7 @@ class PasswordSerializer(serializers.Serializer):
 
         """
         if data['password'] != data['confirm_password']:
-            raise serializers.ValidationError({'confirm_password': "The two password fields didn't match."})
+            raise serializers.ValidationError("The two password fields don't match.")
         validate_password(data['password'], self.context['user'])
         return data
 
@@ -36,5 +36,4 @@ class PasswordSerializer(serializers.Serializer):
         user = self.context['user']
         user.set_password(password)
         user.save()
-        print({"user_detail": user})
         return user

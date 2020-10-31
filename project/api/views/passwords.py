@@ -2,28 +2,29 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework import status
-from api.lib.response import Response
 from app.passwords_action.password_reset import ResetPassword
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action, permission_classes
-
-import sys
-from os import path
-sys.path.append(path.join(path.dirname(__file__), '...'))
 from api.lib.response import Response
 from app.password_action import password_update_action
 
 
 class PasswordsViewSet(ViewSet):
-    """
-
-    """
     @action(methods=['put'], detail=False, permission_classes=[IsAuthenticated])
     def change(self, request):
-        data = dict(sample='Update User Password')
-        return Response(data)
-         result = password_update.UpdatePassword.call(request=request)
-         return Response.create(result)
+        """ 
+        This method updates the user's password and returns an appropriate response.
+        """
+        user = request.user
+        data = request.data
+        result = password_update_action.UpdatePassword.call(user=user, data=data)
+
+        if result.failed:
+            return Response(
+                errors=result.error.value,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(data=result.value, status=status.HTTP_201_CREATED)
 
     @action(methods=['put'], detail=False, permission_classes=[AllowAny])
     def reset(self, request):
@@ -45,4 +46,3 @@ class PasswordsViewSet(ViewSet):
             data=result.value,
             status=status.HTTP_201_CREATED
         )
-

@@ -9,21 +9,15 @@ class UpdatePassword(Action):
     arguments = ['user', 'data']
 
     def perform(self):
-        cur_user = self.user
-        data = self.data
-        user = PasswordSerializer(cur_user, data=data, many=False, context={
-            "user": cur_user
+        serializer = PasswordSerializer(self.user, data=self.data, many=False, context={
+            'user': self.user
         }, partial=True)
 
-        if user.is_valid():
-            user_info = user.save()
-            data = {
-                "username":user_info.username,
-                "email":user_info.email
-            }
-            return data
+        if serializer.is_valid():
+            serializer.save()
+            return {'data': None}
         else:
-            raise Exception("Error")
+            self.fail(serializer.errors)
 
 
 

@@ -22,7 +22,7 @@ class Response:
 
         return dict(
             message=message,
-            data=None,
+            data=data,
             errors=errors,
         )
 
