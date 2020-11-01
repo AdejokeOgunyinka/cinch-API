@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 
 class PasswordSerializer(serializers.Serializer):
     """
-
+    Serializers for update password
     """
     old_password = serializers.CharField(required=True, write_only=True)
     password = serializers.CharField(required=True, write_only=True)
@@ -28,7 +28,7 @@ class PasswordSerializer(serializers.Serializer):
         validate_password(data['password'], self.context['user'])
         return data
 
-    def save(self, **kwargs):
+    def save(self):
         """
         This method saves the password to the user's details
         """

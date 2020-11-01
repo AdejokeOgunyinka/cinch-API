@@ -14,6 +14,7 @@ class PasswordUpdateApiTest(APITestCase):
     """
     This class contains methods to test the update password API
     """
+
     def setUp(self):
         self.user = User.objects.create_user(
             email='user@xyz.com',
@@ -30,28 +31,26 @@ class PasswordUpdateApiTest(APITestCase):
         response = self.client.put('/api/v1/passwords/change', {"old_password": "endsars1", "password": "endsars2",
                                                                 "confirm_password": "endsars2"})
         response.render()
-        self.assertEqual(json.loads(response.content), {'message': 'success', 'data': {'data': None}, 'errors': None})
+        self.assertIsNone(response.data['errors'])
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data['message'], 'success')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_update_fail_old_password(self):
         response = self.client.put('/api/v1/passwords/change', {"old_password": "endsars3", "password": "endsars2",
                                                                 "confirm_password": "endsars2"})
         response.render()
-        self.assertEqual(json.loads(response.content), {'message': 'failure', 'data': None,
-                                                        'errors': {'old_password': [
-                                                            'Old password is incorrect. Please enter it again.'],
-                                                            '_others': []}}
-                         )
+        self.assertIsNotNone(response.data['errors'])
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data['message'], 'failure')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_new_passwords_no_match(self):
         response = self.client.put('/api/v1/passwords/change', {"old_password": "endsars1", "password": "endsars2",
                                                                 "confirm_password": "endsars3"})
         response.render()
-        self.assertEqual(json.loads(response.content), {'message': 'failure', 'data': None,
-                                                        'errors': {'non_field_errors': [
-                                                            "The two password fields don't match."],
-                                                            '_others': []}}
-                         )
+        self.assertIsNotNone(response.data['errors'])
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data['message'], 'failure')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
