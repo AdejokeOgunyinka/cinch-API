@@ -10,6 +10,10 @@ x-api-vars: &api-vars
   DATABASE_URL: postgres://postgres:password@db:5432/cinchdb
   DEBUG: 1
   SECRET_KEY: SOME_RANDOM_SET_OF_CHARACTERS_USED_AS_SECRET_KEY_#
+  EMAIL_HOST_USER: cinchapptest@gmail.com
+  EMAIL_HOST_PASSWORD: cinchapp123
+  EMAIL_USE_TLS: 'True'
+  EMAIL_USE_SSL: 'False'
 
 services:
   db:
