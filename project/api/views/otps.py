@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from api.lib.response import Response
 from app.emails.send_otp import SendOTP
 from app.emails.otp_verification import VerifyEmailVerify
-# from app.emails.verify_otp import VerifyOTP
+from app.emails.verify_otp import VerifyOTP
 
 
 class OtpsViewSet(ViewSet):

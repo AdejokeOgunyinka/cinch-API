@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase, APIClient
-# from db.models.artist import Artist
+from db.models.artist import Artist
 from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth import get_user_model
