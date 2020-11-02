@@ -6,24 +6,27 @@ from rest_framework.permissions import AllowAny
 
 from api.lib.response import Response
 from app.auth.register import Register
-from django.contrib.auth import authenticate
+from rest_framework.permissions import AllowAny
 from rest_framework import status
+from app.auth.login import Login
 
 
 class AuthsViewSet(ViewSet):
     permission_classes = [AllowAny]
-
     @action(methods=['post'], detail=False)
     def login(self, request):
-        '''Generates an authtoken based on the email and password passed in as parameters.
-        Enter email in the username field e.g: {'username': 'enter_email_here', 'password': 'your_password'}'''
-        username = request.data.get("email")
-        password = request.data.get("password")
-        user = authenticate(username=username, password=password)
-        if user:
-            return Response({"token": user.auth_token.key})
-        else:
-            return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+        '''Generates a token based on the email and password passed in as parameters.
+        e.g: {'email': 'enter_email_here', 'password': 'your_password'}'''
+        login_details = Login.call(data=request.POST)
+        if login_details.failed:
+            return Response(
+                errors=login_details.error.value,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            data=login_details.value,
+            status=status.HTTP_200_OK
+        )
 
     @action(methods=['post'], detail=False)
     def register(self, request):
