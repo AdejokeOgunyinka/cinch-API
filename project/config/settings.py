@@ -120,7 +120,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
-EMAIL_HOST_USER=config('EMAIL_HOST_USER', cast=str)
-EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD', cast=str)
-EMAIL_USE_TLS=config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_USE_SSL=config('EMAIL_USE_SSL', default=False, cast=bool)
+EMAIL_HOST_USER= 'cinchapptest@gmail.com'
+EMAIL_HOST_PASSWORD= 'cinchapp123'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
