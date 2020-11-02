@@ -11,8 +11,8 @@ from .manager import UserManager
 class User(AbstractBaseUser):
     id              = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email           = models.EmailField(max_length=255, unique=True)
-    username        = models.CharField(max_length=255, null=True, unique=True)
-    phone_number    = PhoneNumberField()
+    username        = models.CharField(max_length=255, null=True)
+    phone_number    = PhoneNumberField(null=True)
     email_verified  = models.BooleanField(default=False)
     otp_code        = models.CharField(max_length=30, null=True)
     otp_code_expiry = models.DateTimeField(default=timezone.now)
