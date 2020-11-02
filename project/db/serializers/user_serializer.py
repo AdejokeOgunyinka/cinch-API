@@ -18,15 +18,12 @@ class UserSerializer(serializers.ModelSerializer):
         email_valid = 'email' in data and data['email']
         confirm_password = 'confirm_password' in data and data['confirm_password']
         password_match = data['password'] == data['confirm_password']
-        phone_number_valid = 'phone_number' in data and data['phone_number']
         validate_password(password=data['password'])
 
         errors = {}
         if not confirm_password:
             errors['confirm_password'] = ['field cannot be empty']
 
-        if not phone_number_valid:
-            errors['phone_number'] = ['Invalid phone_number']
 
         if not password_match:
             errors['password_match'] = ['Password do not match']
