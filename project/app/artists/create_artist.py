@@ -1,5 +1,6 @@
 from db.serializers.user_serializer import UserSerializer
 from django.contrib.auth import get_user_model
+from app.emails.send_otp import SendOTP
 
 from app.action import Action
 from db.models.artist import Artist
@@ -42,12 +43,14 @@ class CreateArtist(Action):
         
         # save user to db
         user.save()
+        SendOTP.call(email=email)
 
         # save artist to db
         artist.save()
+        # SendOTP.call(email=email)
         
         return_data = dict(
             otp=otp, username=username, first_name=firstname, 
-            last_name=lastname, phone_number=phone_number
+            last_name=lastname, phone_number=phone_number, password=password
         )
         return return_data
