@@ -6,7 +6,7 @@ class VerifyEmailVerify(Action):
     arguments =['email']
 
     def perform(self):
-        user = get_user_model().objects.get(self.email)
+        user = get_user_model().objects.get(email=self.email)
         if user and user.email_verified == False:
             user.email_verified = True
             user.save()

@@ -38,7 +38,7 @@ class OtpViewSetTest(APITestCase):
 
         response = self.client.post(url,req_data)
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         exp_data = {
                 "message": "failure",
         }
@@ -54,7 +54,7 @@ class OtpViewSetTest(APITestCase):
             "otp_code": "1234567"
         }
         response = self.client.post(url, req_data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         exp_data = {
                 "message": "failure",
         }
@@ -70,7 +70,7 @@ class OtpViewSetTest(APITestCase):
             "otp_code": self.user["otp_code"]
         }
         response = self.client.post(url, req_data)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
         exp_data = {
             "message": "failure",
 
