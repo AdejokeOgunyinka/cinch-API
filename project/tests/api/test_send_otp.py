@@ -28,9 +28,7 @@ class TestSendOtp(APITestCase):
         data = {
             'email': self.ade.email
         }
-        response = client.post(
-            reverse('otps-send'), data)
-
+        response = client.post(reverse('otps-send'), data)
         user = User.objects.get(pk=self.ade.pk)
         serializer = UserSerializer(user)
         
@@ -41,10 +39,6 @@ class TestSendOtp(APITestCase):
         data = {
             'email': self.adeope.email
         }
-        response = client.post(
-            reverse('otps-send'), data)
-        user = User.objects.get(pk=self.adeope.pk)
-        serializer = UserSerializer(user)
-
-        self.assertEqual(response.data.get('data').get("email"), None)
+        response = client.post(reverse('otps-send'), data)
+        self.assertEqual(response.data['message'], 'failure')
         

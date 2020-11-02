@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 from app.action import Action
 from db.models.artist import Artist
+from app.emails.send_otp import SendOTP
 from ..validations.validate_artist import RegisterArtistValidation
 
 
@@ -13,10 +14,6 @@ class Register(Action):
         user_serializer = UserSerializer(data=self.data)
         if not user_serializer.is_valid():
             self.fail(user_serializer.errors)
-
-
-        # call a function to generate OTP
-        otp = '123456'
 
         # Get all the Data
         email=self.data.get('email', '')
@@ -35,7 +32,7 @@ class Register(Action):
             username = username,
             phone_number = phone_number,
             password = password,
-            otp_code = otp
+            # otp_code = otp
         )
         user.set_password(password)
 
@@ -50,9 +47,11 @@ class Register(Action):
 
         # save artist to db
         artist.save()
+
+        otp = SendOTP.call(email=email)
         
         return_data = dict(
-            otp=otp, username=username, first_name=firstname, 
+            otp=otp.value, email=email, username=username, first_name=firstname, 
             last_name=lastname, phone_number=phone_number
         )
         return return_data
