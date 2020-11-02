@@ -1,9 +1,11 @@
-from app.action import Action
 from django.contrib.auth import get_user_model
-from lib.generate_otp import generate_otp
-from datetime import timedelta
 from django.utils import timezone
+from datetime import timedelta
+
+from app.action import Action
+from lib.generate_otp import generate_otp
 from app.emails.email_template import email_template
+
 
 class SendOTP(Action):
     arguments = ['email']

@@ -1,14 +1,12 @@
-from unittest import TestCase
-from db.models.user import User
-from django.utils import timezone
-from datetime import datetime, timedelta
-from rest_framework import status
+from datetime import timedelta
 from django.test import Client
 from django.urls import reverse
-from db.serializers.user_serializer import UserSerializer
 from django.utils import timezone
+from rest_framework import status
 from rest_framework.test import APITestCase
 
+from db.models.user import User
+from db.serializers.user_serializer import UserSerializer
 
 
 client = Client()

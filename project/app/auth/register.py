@@ -32,7 +32,6 @@ class Register(Action):
             username = username,
             phone_number = phone_number,
             password = password,
-            # otp_code = otp
         )
         user.set_password(password)
 

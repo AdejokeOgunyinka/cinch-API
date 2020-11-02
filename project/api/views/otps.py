@@ -1,9 +1,9 @@
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
-from rest_framework import status
+
 from api.lib.response import Response
 from app.emails.send_otp import SendOTP
-
 
 
 class OtpsViewSet(ViewSet):

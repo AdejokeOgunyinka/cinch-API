@@ -1,6 +1,8 @@
-from app.action import Action
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+
+from app.action import Action
+
 
 class VerifyOTP(Action):
     arguments = ['otp_code']
