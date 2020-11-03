@@ -29,7 +29,7 @@ class OtpsViewSet(ViewSet):
 
         if verify_email.failed:
             return Response(
-                errors=dict(err=verify_email.error.value),
+                errors=verify_email.error.value,
                 status=status.HTTP_400_BAD_REQUEST
             )
 
