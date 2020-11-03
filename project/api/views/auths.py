@@ -17,7 +17,7 @@ class AuthsViewSet(ViewSet):
     def login(self, request):
         '''Generates a token based on the email and password passed in as parameters.
         e.g: {'email': 'enter_email_here', 'password': 'your_password'}'''
-        login_details = Login.call(data=request.POST)
+        login_details = Login.call(data=request.data)
         if login_details.failed:
             return Response(
                 errors=login_details.error.value,
@@ -34,7 +34,7 @@ class AuthsViewSet(ViewSet):
         
         if artist.failed:
             return Response(
-                errors=artist.error.value,
+                errors=dict(a=artist.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
 
