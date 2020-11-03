@@ -1,13 +1,14 @@
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
+from rest_framework.permissions import AllowAny
 
 from api.lib.response import Response
 from app.emails.send_otp import SendOTP
 
 
 class OtpsViewSet(ViewSet):
-
+    permission_classes = [AllowAny]
     @action(methods=['post'], detail=False)
     def send(self, request):
 
