@@ -11,7 +11,7 @@ class OtpsViewSet(ViewSet):
     @action(methods=['post'], detail=False)
     def send(self, request):
 
-        email = request.data['email']
+        email = request.data.get('email', '')
         otp = SendOTP.call(email=email)
 
         if otp.value:

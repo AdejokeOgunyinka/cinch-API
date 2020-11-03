@@ -18,7 +18,7 @@ class AuthsViewSet(ViewSet):
 
     @action(methods=['post'], detail=False)
     def register(self, request):
-        artist = Register.call(data=request.POST)
+        artist = Register.call(data=request.data)
         
         if artist.failed:
             return Response(
