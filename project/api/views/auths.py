@@ -34,7 +34,7 @@ class AuthsViewSet(ViewSet):
         
         if artist.failed:
             return Response(
-                errors=dict(a=artist.error.value),
+                errors=artist.error.value,
                 status=status.HTTP_400_BAD_REQUEST
             )
 
