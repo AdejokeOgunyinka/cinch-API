@@ -35,15 +35,9 @@ class PasswordResetSerializer(serializers.ModelSerializer):
 
         return data
 
-    # def create(self, validated_data):
-    #     return User.objects.create(**validated_data)
-
     def update(self, instance, validated_data):
-        print(validated_data, '=================')
         # This function updates the password in the database after the validation has been done.
         instance.password = validated_data.get('password', instance.password)
-        a = validated_data.get('password')
-        print(a, '=================')
         instance.set_password(instance.password)
         instance.save()
 
