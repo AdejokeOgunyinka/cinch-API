@@ -1,0 +1,46 @@
+# Import base action class
+from django.contrib.auth import get_user_model
+from db.serializers.password_reset_serializer import PasswordResetSerializer
+from app.action import Action
+from app.emails.verify_otp import VerifyOTP
+# Define the action !!!
+
+
+class ResetPassword(Action):
+    """The ResetPassword class accepts a request argument(data) and returns the user's data"""
+    arguments = ['data']
+
+    def perform(self):
+        # Serialize the data - this carries out the validation
+        serialize_password = PasswordResetSerializer(data=self.data)
+
+        # Raise all errors from the serializer validation
+        if not serialize_password.is_valid():
+            self.fail(serialize_password.errors)
+
+        # Get the user instance in the database with the email address enter by the user, on the view
+        user = get_user_model().objects.filter(email=self.data.get('email'))
+
+        # print('=====================')
+
+        # Raise an error if there's no user with that email address in the database
+        if not user.exists():
+            self.fail(dict(invalid_email='Please enter a registered email address'))
+        # print('=====================')
+
+        # if there are no errors, verify the otp entered by the user
+        verify_otp_user = VerifyOTP.call(otp_code=self.data['otp_code'])
+
+        # If the otp verification failed, raise the error
+        if verify_otp_user.failed:
+            self.fail(dict(incorrect_otp='Please enter a correct otp'))
+        userr = get_user_model().objects.get(email=self.data.get('email'))
+        # If there are no errors, save the new password into the database
+        user_ins = PasswordResetSerializer(userr, data=self.data)
+        user_ins.save()
+
+        # serialize_password.save()
+        # user.password = self.data['password']
+        # user.save()
+
+        return dict(data=None)

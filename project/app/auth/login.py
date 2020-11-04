@@ -7,7 +7,6 @@ class Login(Action):
     arguments = ['data']
     def perform(self):
         email = self.data.get("email")
-        print(email)
         password = self.data.get("password")
         if email is None or password is None:
             self.fail(dict(invalid_credential = 'Please provide both email and password'))
