@@ -2,7 +2,7 @@
 .vscode
 .DS_Store
 tmp/
-.idea
+.idea/
 # [Python]
 *.pyc
 venv/

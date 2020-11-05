@@ -47,6 +47,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+TWILIO_ACCOUNT_SID = "AC15412955e28fe1f4960fb3faa09d8f6c"
+TWILIO_AUTH_TOKEN = "8e195bb39cf1aec84a102f739b60d42a"
+TWILIO_NUMBER = "+12564834126"
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -59,6 +65,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+
 
 TEMPLATES = [
     {

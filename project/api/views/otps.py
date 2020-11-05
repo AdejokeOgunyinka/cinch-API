@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 from api.lib.response import Response
 from app.emails.send_otp import SendOTP
 from app.emails.otp_verification import VerifyEmailVerify
+from app.phone.send_phone_otp import PhoneOtpAction
 
 
 class OtpsViewSet(ViewSet):
@@ -36,3 +37,13 @@ class OtpsViewSet(ViewSet):
         return Response(data=verify_email.value)
 
 
+
+    @action(methods=['post'], detail=False, url_path='send/phone')
+    def broadcast_sms(self, request, otp=None):
+        data = request.data
+
+        send_otp = PhoneOtpAction.call(otp=otp, data=data)
+
+        if send_otp.failed:
+            return Response(errors=dict(err=send_otp.error.value), status=status.HTTP_400_BAD_REQUEST)
+        return Response(data=send_otp.value, status=status.HTTP_200_OK)
