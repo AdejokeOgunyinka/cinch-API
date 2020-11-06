@@ -38,6 +38,7 @@ class OtpsViewSet(ViewSet):
 
 
 
+
     @action(methods=['post'], detail=False, url_path='send/phone')
     def broadcast_sms(self, request, otp=None):
         data = request.data
@@ -45,5 +46,5 @@ class OtpsViewSet(ViewSet):
         send_otp = PhoneOtpAction.call(otp=otp, data=data)
 
         if send_otp.failed:
-            return Response(errors=dict(err=send_otp.error.value), status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=send_otp.error.value, status=status.HTTP_400_BAD_REQUEST)
         return Response(data=send_otp.value, status=status.HTTP_200_OK)

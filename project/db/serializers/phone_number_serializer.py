@@ -13,6 +13,6 @@ class PhoneNumberSerializer(serializers.Serializer):
             errors['phone_number'] = ['Please provide a valid phone number']
 
         if len(errors):
-            raise  serializers.ValidationError(errors)
+            raise serializers.ValidationError(errors)
 
         return data
