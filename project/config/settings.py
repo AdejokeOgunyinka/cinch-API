@@ -3,10 +3,8 @@ from pathlib import Path
 from decouple import config
 from django.core.management.utils import get_random_secret_key
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -22,7 +20,6 @@ SECRET_KEY = config('SECRET_KEY', default=get_random_secret_key(), cast=str)
 # Collect allowed hosts via an environment variable
 ALLOWED_HOSTS_STR = config('ALLOWED_HOSTS', default='', cast=str).strip()
 ALLOWED_HOSTS = [] if not ALLOWED_HOSTS_STR else ALLOWED_HOSTS_STR.split(',')
-
 
 # Application definition
 
@@ -40,18 +37,15 @@ INSTALLED_APPS = [
     'app',
 ]
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES':
+    ('rest_framework.authentication.TokenAuthentication', ),
+    'DEFAULT_PERMISSION_CLASSES':
+    ('rest_framework.permissions.IsAuthenticated', ),
 }
 
-TWILIO_ACCOUNT_SID = "AC15412955e28fe1f4960fb3faa09d8f6c"
-TWILIO_AUTH_TOKEN = "8e195bb39cf1aec84a102f739b60d42a"
-TWILIO_NUMBER = "+12564834126"
-
+TWILIO_ACCOUNT_SID = "AC8c07fb6bfe4e405070b9c326a7262dc5"
+TWILIO_AUTH_TOKEN = "3a12ebf81b574b78e6bf6ca6df0e44b2"
+TWILIO_NUMBER = "+12058511100"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,8 +59,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-
-
 
 TEMPLATES = [
     {
@@ -86,34 +78,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 AUTH_USER_MODEL = 'db.User'
 
-DATABASES = {
-    'default': dj_database_url.config(conn_max_age=60)
-}
+DATABASES = {'default': dj_database_url.config(conn_max_age=60)}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -128,7 +120,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -137,9 +128,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER= 'cinchapptest@gmail.com'
-EMAIL_HOST_PASSWORD= 'cinchapp123'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cinchapptest@gmail.com'
+EMAIL_HOST_PASSWORD = 'cinchapp123'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
