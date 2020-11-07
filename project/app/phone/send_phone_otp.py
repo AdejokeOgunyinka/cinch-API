@@ -1,10 +1,15 @@
+from datetime import timedelta
 from django.conf import settings
+from django.utils import timezone
+
 from twilio.rest import Client
 
-from db.models.user import User
-from lib.generate_otp import generate_otp
 from app.action import Action
+from db.models.user import User
+from app.emails.send_otp import SendOTP
+from lib.generate_otp import generate_otp
 from db.serializers.phone_number_serializer import PhoneNumberSerializer
+
 
 class PhoneOtpAction(Action):
     arguments = ['data', 'otp']
@@ -31,8 +36,17 @@ class PhoneOtpAction(Action):
 
         user.otp_code=otp #accesses otp_code attribute
         user.phone_number = self.data['phone_number']
+        expiry = timezone.now() + timedelta(minutes=10)
+        user.otp_code_expiry = expiry
+        user.email_verified = False
         user.save()
 
+        email = self.data['email']
+
+        # send otp to email
+        SendOTP.call(email=email, otp=otp) 
+
+        # Send Otp to phone 
         client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         message_to_broadcast = (f'Your Cinch Verification code is {otp}')
         client.messages.create(to=phone_number,

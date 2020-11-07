@@ -26,5 +26,3 @@ class VerifyEmailVerify(Action):
         user.email_verified = True
         user.save()
         return dict(data=None)
-
-

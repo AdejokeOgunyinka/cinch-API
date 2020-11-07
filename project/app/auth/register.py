@@ -47,10 +47,8 @@ class Register(Action):
         # save artist to db
         artist.save()
 
-        otp = SendOTP.call(email=email)
-        
         return_data = dict(
-            otp=otp.value, email=email, username=username, first_name=firstname, 
+            email=email, username=username, first_name=firstname, 
             last_name=lastname, phone_number=phone_number
         )
         return return_data

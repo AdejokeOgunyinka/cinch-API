@@ -1,6 +1,6 @@
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
 from api.lib.response import Response
@@ -11,10 +11,12 @@ from app.phone.send_phone_otp import PhoneOtpAction
 
 class OtpsViewSet(ViewSet):
     permission_classes = [AllowAny]
+
     @action(methods=['post'], detail=False)
-    def send(self, request):
+    def send(self, request, otp=None):
         email = request.data.get('email', '')
-        otp = SendOTP.call(email=email)
+        
+        otp = SendOTP.call(email=email, otp=otp)
 
         if otp.value:
             return Response(data={"otp": otp.value}, status=status.HTTP_201_CREATED)
@@ -36,11 +38,8 @@ class OtpsViewSet(ViewSet):
 
         return Response(data=verify_email.value)
 
-
-
-
     @action(methods=['post'], detail=False, url_path='send/phone')
-    def broadcast_sms(self, request, otp=None):
+    def send_sms(self, request, otp=None):
         data = request.data
 
         send_otp = PhoneOtpAction.call(otp=otp, data=data)

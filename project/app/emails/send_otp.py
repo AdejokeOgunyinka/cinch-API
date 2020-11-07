@@ -8,16 +8,22 @@ from app.emails.email_template import email_template
 
 
 class SendOTP(Action):
-    arguments = ['email']
+    arguments = ['email', 'otp']
 
     def perform(self):
 
         if not self.email:
             self.fail(dict(invalid_email='Please provide a valid email address'))
-        
-        otp = generate_otp()
 
-        user = get_user_model().objects.get(email=self.email)
+        user = get_user_model().objects.filter(email=self.email)
+        if not user.exists():
+            self.fail(dict(invalid_email='Please provide a valid email'))
+        
+        user = user[0]
+        otp = self.otp
+        if otp is None:
+            otp = generate_otp()
+
         user.otp_code = otp
         expiry = timezone.now() + timedelta(minutes=10)
         user.otp_code_expiry = expiry
