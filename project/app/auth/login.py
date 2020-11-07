@@ -12,11 +12,11 @@ class Login(Action):
             self.fail(dict(invalid_credential = 'Please provide both email and password'))
         
         user = authenticate(username=email, password=password)
+        if not user:
+            self.fail(dict(invalid_credential='Only registered users can login. Please sign up first.'))
 
         if not user.email_verified:
             self.fail(dict(verification_failed='Please verify your account'))
-
-        if not user:
-            self.fail(dict(invalid_credential='Only registered users can login. Please sign up first.'))
+            
         token, _ = Token.objects.get_or_create(user=user)
         return dict(token=token.key)
