@@ -5,6 +5,7 @@ from .views import (
     AuthsViewSet,
     ArtistsViewSet,
     PasswordsViewSet,
+    LocationViewset,
 )
 
 
@@ -14,6 +15,7 @@ router = SimpleRouter(trailing_slash=False)
 router.register(r'auth', AuthsViewSet, basename='auth')
 router.register(r'otps', OtpsViewSet, basename='otps')
 router.register(r'passwords', PasswordsViewSet, basename='passwords')
+router.register(r'locations', LocationViewset, basename='locations')
 
 # # Artists Routes
 router.register(r'artists', ArtistsViewSet, basename='artists')

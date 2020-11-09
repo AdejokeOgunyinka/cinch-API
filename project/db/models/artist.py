@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
+from db.models.location import Location
 
 
 class Artist(models.Model):
@@ -11,6 +12,7 @@ class Artist(models.Model):
     avatar_url  = models.CharField(max_length=255, null=True)
     created_at  = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True, auto_now_add=False)
+    location_id = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f" {self.firstname} {self.lastname}"
