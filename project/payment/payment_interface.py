@@ -14,10 +14,3 @@ class PaymentInterface:
                   'Authorization': settings.BEARER_KEY}
         res = requests.get(url, headers=header)
         return res.json()
-
-    @classmethod
-    def post(cls, url, data):
-        header = {'Content-Type': 'application/json',
-                  'Authorization': settings.BEARER_KEY}
-        res = requests.post(url, data, header)
-        return res.json()
