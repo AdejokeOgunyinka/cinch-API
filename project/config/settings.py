@@ -126,3 +126,6 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default="dummy-password")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+# Paystack Settings
+BEARER_KEY = config("BEARER_KEY", default='')
