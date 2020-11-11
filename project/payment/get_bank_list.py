@@ -5,7 +5,7 @@ from app.action import Action
 class BankList(Action):
     def perform(self):
         try:
-            res = PaymentInterface.get('https://api.paystack.co/bank')
+            res = PaymentInterface.get_without_header('https://api.paystack.co/bank')
             banks = res.get('data')
             bank_data = [{'name' : bank.get('name'), 'code': bank.get('code')} for bank in banks]
             return bank_data
