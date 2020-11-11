@@ -3,6 +3,8 @@
 .DS_Store
 tmp/
 .idea/
+.env
+
 # [Python]
 *.pyc
 venv/

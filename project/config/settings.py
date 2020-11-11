@@ -43,9 +43,9 @@ REST_FRAMEWORK = {
     ('rest_framework.permissions.IsAuthenticated', ),
 }
 
-TWILIO_ACCOUNT_SID = "AC8c07fb6bfe4e405070b9c326a7262dc5"
-TWILIO_AUTH_TOKEN = "3a12ebf81b574b78e6bf6ca6df0e44b2"
-TWILIO_NUMBER = "+12058511100"
+TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID', default='')
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN', default='')
+TWILIO_NUMBER = config('TWILIO_NUMBER', default='')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -120,9 +120,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.dummy.net")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="dummy@gmail.com")
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default="dummy-password")
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'cinchapptest@gmail.com'
-EMAIL_HOST_PASSWORD = 'cinchapp123'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False

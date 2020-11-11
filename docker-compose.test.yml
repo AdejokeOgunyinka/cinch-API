@@ -10,6 +10,13 @@ x-api-vars: &api-vars
   DATABASE_URL: postgres://postgres:password@db:5432/cinchdb
   DEBUG: 0
   PORT: 18000
+  EMAIL_HOST: $${{ secrets.EMAIL_HOST }}
+  EMAIL_HOST_USER: $${{ secrets.EMAIL_HOST_USER }}
+  EMAIL_HOST_PASSWORD: $${{ secrets.EMAIL_HOST_PASSWORD }}
+  TWILIO_ACCOUNT_SID: $${{ secrets.TWILIO_ACCOUNT_SID }}
+  TWILIO_AUTH_TOKEN: $${{ secrets.TWILIO_AUTH_TOKEN }}
+  TWILIO_NUMBER: $${{ secrets.TWILIO_NUMBER }}
+  
 
 services:
   db:

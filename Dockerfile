@@ -19,6 +19,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /cinch
 
+COPY Dockerfile ./.env* ./
+
 COPY ./requirements.txt .
 
 COPY ./project ./project
