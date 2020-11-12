@@ -10,5 +10,5 @@ class TestPaymentInterface(APITestCase):
 
     def test_get_header(self):
         res = PaymentInterface.get_header(
-            'https://api.paystack.co/bank/resolve?account_number=3104841829&bank_code=011')
-        self.assertEquals(res.get('status'), True)
+            'https://api.paystack.co/bank/resolve?account_number=310484182&bank_code=011')
+        self.assertEquals(res.get('status'), False)
