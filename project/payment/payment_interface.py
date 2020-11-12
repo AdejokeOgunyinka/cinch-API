@@ -12,5 +12,6 @@ class PaymentInterface:
     def get_with_auth(cls, url):
         header = {'Content-Type': 'application/json',
                   'Authorization': settings.PAYSTACK_PUBLIC_KEY}
+        print(header)
         res = requests.get(url, headers=header)
         return res.json()
