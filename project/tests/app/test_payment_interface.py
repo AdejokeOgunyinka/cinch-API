@@ -1,6 +1,5 @@
 from payment.payment_interface import PaymentInterface
 from rest_framework.test import APITestCase
-from rest_framework import status
 import json
 
 
