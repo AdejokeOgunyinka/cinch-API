@@ -13,6 +13,8 @@ class BankVerify(Action):
 
         result = PaymentInterface.get_with_auth(res_url)
 
+        print(result)
+
         status_message = result.get('status')
 
         # If Pay stack account verification fails
