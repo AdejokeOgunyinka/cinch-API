@@ -11,6 +11,3 @@ class BankList(Action):
             return bank_data
         except:
             return self.fail(dict(paystack_error='Having problems connecting to paystack'))
-
-
-pay_with_bank , active and country
