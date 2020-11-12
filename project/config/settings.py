@@ -128,4 +128,4 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 # Paystack Settings
-PAYSTACK_PUBLIC_KEY = config("PAYSTACK_PUBLIC_KEY", default='')
+PAYSTACK_PUBLIC_KEY = config("PAYSTACK_PUBLIC_KEY", default='', cast=str).strip()

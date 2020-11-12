@@ -5,6 +5,7 @@ from .views import (
     ArtistsViewSet,
     PasswordsViewSet,
     LocationViewset,
+    BankListViewSet,
     AccountVerifyViewSet,
 )
 
@@ -16,6 +17,7 @@ router.register(r'passwords', PasswordsViewSet, basename='passwords')
 router.register(r'locations', LocationViewset, basename='locations')
 
 # Payment Routes
+router.register(r'banks', BankListViewSet, basename='banks')
 router.register(r'add_account', AccountVerifyViewSet, basename='add_account')
 
 # # Artists Routes
