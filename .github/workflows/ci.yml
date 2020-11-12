@@ -16,6 +16,8 @@ jobs:
           time: '10s'
       - name: Show Services Logs
         run: docker-compose -f docker-compose.test.yml logs
+        env:
+          PAYSTACK_PUBLIC_KEY: ${{ secrets.PAYSTACK_PUBLIC_KEY }}
       - name: Run Migrations
         run: bin/exec migrate
       - name: Run Tests

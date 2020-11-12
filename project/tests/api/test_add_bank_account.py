@@ -4,6 +4,7 @@ from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from db.models.user import User
 from db.models.artist import Artist
+import os
 
 
 class TestAddAccount(APITestCase):
@@ -43,6 +44,7 @@ class TestAddAccount(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
     def test_add_valid_account(self):
+        print(os.environ)
         url = reverse('add_account-save-account-details')
         response = self.client.post(url, self.correct_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

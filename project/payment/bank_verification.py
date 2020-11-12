@@ -1,5 +1,6 @@
 from .payment_interface import PaymentInterface
 from app.action import Action
+import os
 
 
 class BankVerify(Action):
@@ -12,8 +13,6 @@ class BankVerify(Action):
         res_url = f'https://api.paystack.co/bank/resolve?account_number={account_number}&bank_code={bank_code}'
 
         result = PaymentInterface.get_with_auth(res_url)
-
-        print(result)
 
         status_message = result.get('status')
 

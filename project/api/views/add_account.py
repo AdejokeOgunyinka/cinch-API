@@ -15,7 +15,7 @@ class AccountVerifyViewSet(ViewSet):
 
         # If account is invalid
         if account_details.failed:
-            return Response(errors=account_details.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(err=account_details.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         res = account_details.value
         status_message = res.get('status')
@@ -33,7 +33,7 @@ class AccountVerifyViewSet(ViewSet):
 
             # If Artist_id already exists with a register account and saving fails
             if save_data.failed:
-                return Response(errors=save_data.error.value, status=status.HTTP_400_BAD_REQUEST)
+                return Response(errors=dict(err=save_data.error.value), status=status.HTTP_400_BAD_REQUEST)
 
             # If all checks are successful and data is saved
             return Response(data=save_data.value, status=status.HTTP_201_CREATED)

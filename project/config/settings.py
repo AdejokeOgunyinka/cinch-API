@@ -43,6 +43,9 @@ REST_FRAMEWORK = {
     ('rest_framework.permissions.IsAuthenticated', ),
 }
 
+# Paystack Settings
+PAYSTACK_PUBLIC_KEY = config("PAYSTACK_PUBLIC_KEY", default='')
+
 TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID', default='')
 TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN', default='')
 TWILIO_NUMBER = config('TWILIO_NUMBER', default='')
@@ -127,5 +130,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-# Paystack Settings
-PAYSTACK_PUBLIC_KEY = config("PAYSTACK_PUBLIC_KEY", default='', cast=str).strip()

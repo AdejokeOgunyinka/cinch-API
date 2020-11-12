@@ -10,8 +10,10 @@ class PaymentInterface:
 
     @classmethod
     def get_with_auth(cls, url):
-        header = {'Content-Type': 'application/json',
-                  'Authorization': settings.PAYSTACK_PUBLIC_KEY}
-        print(header)
+        header = {
+            "Authorization": f"Bearer {settings.PAYSTACK_PUBLIC_KEY}",
+            "Content-Type": "application/json",
+        }
+        # print(header, 'this is the header')
         res = requests.get(url, headers=header)
         return res.json()
