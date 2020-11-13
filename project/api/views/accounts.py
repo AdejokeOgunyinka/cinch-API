@@ -1,13 +1,20 @@
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 from api.lib.response import Response
-from payment.account_verification import AccountVerification
+from payment.get_accounts import GetAccount
 from payment.create_account import CreateAccount
+from payment.account_verification import AccountVerification
 
 
 class AccountViewSet(ViewSet):
+    @action(methods=['get'], detail=False, permission_classes=[AllowAny], url_path='*')
+    def get_accounts(self, request):
+        result = GetAccount.call()
+        return Response(result.value, status=status.HTTP_200_OK)
+
     @action(methods=['post'], detail=False, permission_classes=[IsAuthenticated], url_path='create')
     def create_account(self, request):
 

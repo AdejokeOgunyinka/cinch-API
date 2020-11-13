@@ -4,7 +4,6 @@ from db.serializers.account_serializer import AccountSerializer
 
 
 class GetAccount(Action):
-
     def perform(self):
         all_accounts = Account.objects.all()
         serialize_accounts = AccountSerializer(all_accounts, many=True)
