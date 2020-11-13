@@ -4,7 +4,7 @@ from db.models.account import Account
 from db.serializers.account_serializer import AccountSerializer
 
 
-class AddAccount(Action):
+class CreateAccount(Action):
     arguments = ['account_name', 'account_number', 'bank_name', 'bank_code', 'user_id']
 
     def perform(self):
@@ -28,7 +28,7 @@ class AddAccount(Action):
         account_serializer = AccountSerializer(data=data)
 
         if not account_serializer.is_valid():
-            self.fail(dict(duplicate_account='Your Bank Details already exist.'))
+            self.fail(account_serializer.errors)
 
         account = Account.objects.create(
             account_name=account_name,

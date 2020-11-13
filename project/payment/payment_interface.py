@@ -14,6 +14,5 @@ class PaymentInterface:
             "Authorization": f"Bearer {settings.PAYSTACK_PUBLIC_KEY}",
             "Content-Type": "application/json",
         }
-        # print(header, 'this is the header')
         res = requests.get(url, headers=header)
         return res.json()

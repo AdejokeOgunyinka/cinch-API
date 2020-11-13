@@ -1,9 +1,8 @@
 from .payment_interface import PaymentInterface
 from app.action import Action
-import os
 
 
-class BankVerify(Action):
+class AccountVerification(Action):
     arguments = ['data']
 
     def perform(self):

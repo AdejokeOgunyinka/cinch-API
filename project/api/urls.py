@@ -6,7 +6,7 @@ from .views import (
     PasswordsViewSet,
     LocationViewset,
     BankListViewSet,
-    AccountVerifyViewSet,
+    AccountViewSet,
 )
 
 router = SimpleRouter(trailing_slash=False)
@@ -18,7 +18,7 @@ router.register(r'locations', LocationViewset, basename='locations')
 
 # Payment Routes
 router.register(r'banks', BankListViewSet, basename='banks')
-router.register(r'add_account', AccountVerifyViewSet, basename='add_account')
+router.register(r'accounts', AccountViewSet, basename='accounts')
 
 # # Artists Routes
 router.register(r'artists', ArtistsViewSet, basename='artists')
