@@ -30,7 +30,7 @@ class TestGetArtist(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
-    def test_get_accounts(self):
+    def test_get_artist(self):
         url = reverse('artists-get-artist')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
