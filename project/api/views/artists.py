@@ -6,7 +6,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from app.artists.update_artist import UpdateArtist
 from api.lib.response import Response
-from payment.account_verification import AccountVerification
 
 class ArtistsViewSet(ViewSet):
 
@@ -34,22 +33,7 @@ class ArtistsViewSet(ViewSet):
     def update_profile(self, request):
 
         request_email = request.user
-        account_details = AccountVerification.call(data=request.data)
-
-        if account_details.failed:
-            return Response(errors=account_details.error.value, status=status.HTTP_400_BAD_REQUEST)
-
-        res = account_details.value
-        account_data = res.get('data')
-
-        bank_data = dict(
-            account_number=account_data.get('account_number'),
-            account_name=account_data.get('account_name'),
-            bank_name=request.data.get('bank_name'),
-            bank_code=request.data.get('bank_code')
-        )
-
-        artist = UpdateArtist.call(data=request.data, user_email=request_email, bank_data=bank_data)
+        artist = UpdateArtist.call(data=request.data, user_email=request_email)
 
         if artist.failed:
             return Response(errors=artist.error.value, status=status.HTTP_400_BAD_REQUEST)
