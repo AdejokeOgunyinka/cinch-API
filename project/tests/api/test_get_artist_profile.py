@@ -8,7 +8,7 @@ from db.models.artist import Artist
 from db.models.location import Location
 
 
-class TestGetAccounts(APITestCase):
+class TestGetArtist(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             email='user@xyz.com',
