@@ -32,4 +32,4 @@ class ArtistProfile(Action):
             'last_name': serialize_artist.data.get('lastname', '')
         }
 
-        return dict(artist_profile=artist_information)
+        return artist_information

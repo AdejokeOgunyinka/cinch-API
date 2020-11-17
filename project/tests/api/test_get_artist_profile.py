@@ -24,13 +24,15 @@ class TestGetArtist(APITestCase):
             location_id=self.location,
         )
 
-        self.token = Token.objects.create(user=self.user)
-        self.api_authentication()
+        # self.token = Token.objects.create(user=self.user)
+        # self.api_authentication()
 
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
+    # def api_authentication(self):
+    #     self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
 
     def test_get_artist(self):
         url = reverse('artists-get-artist')
-        response = self.client.get(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(url)
+        print(response.status_code)
+        self.assertEqual(response.status_code, 200)
