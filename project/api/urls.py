@@ -7,7 +7,6 @@ from .views import (
     LocationViewset,
     BankListViewSet,
     AccountViewSet,
-    ArtistProfileViewSet,
 )
 
 router = SimpleRouter(trailing_slash=False)
@@ -23,6 +22,5 @@ router.register(r'accounts', AccountViewSet, basename='accounts')
 
 # # Artists Routes
 router.register(r'artists', ArtistsViewSet, basename='artists')
-router.register(r'profile', ArtistProfileViewSet, basename='profile')
 
 urlpatterns = router.urls
