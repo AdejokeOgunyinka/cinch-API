@@ -3,6 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
+from lib.lower_strip import strip_and_lower
 from api.lib.response import Response
 from app.emails.send_otp import SendOTP
 from app.emails.otp_verification import VerifyEmailVerify
@@ -14,7 +15,7 @@ class OtpsViewSet(ViewSet):
 
     @action(methods=['post'], detail=False)
     def send(self, request, otp=None):
-        email = request.data.get('email', '')
+        email = strip_and_lower(request.data.get('email', ''))
         
         otp = SendOTP.call(email=email, otp=otp)
 
@@ -25,7 +26,7 @@ class OtpsViewSet(ViewSet):
             
     @action(methods=['post'], detail=False)
     def verify(self, request):
-        email = request.data.get('email', '')
+        email = strip_and_lower(request.data.get('email', ''))
         otp_code = request.data.get('otp_code', '')
 
         verify_email = VerifyEmailVerify.call(email=email, otp=otp_code)
@@ -46,4 +47,5 @@ class OtpsViewSet(ViewSet):
 
         if send_otp.failed:
             return Response(errors=send_otp.error.value, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(data=send_otp.value, status=status.HTTP_200_OK)

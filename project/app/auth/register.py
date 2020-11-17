@@ -1,6 +1,6 @@
-from db.serializers.user_serializer import UserSerializer
 from django.contrib.auth import get_user_model
-
+from db.serializers.user_serializer import UserSerializer
+from lib.lower_strip import strip_and_lower
 from app.action import Action
 from db.models.artist import Artist
 from app.emails.send_otp import SendOTP
@@ -11,15 +11,17 @@ class Register(Action):
     arguments = ['data']
 
     def perform(self):
+        self.data['email'] = strip_and_lower(self.data.get('email', ''))
+
         user_serializer = UserSerializer(data=self.data)
         if not user_serializer.is_valid():
             self.fail(user_serializer.errors)
 
         # Get all the Data
-        email=self.data.get('email', '')
+        email=strip_and_lower(self.data.get('email', ''))
         username = self.data.get('username', '')
         phone_number = self.data.get('phone_number')
-        password = self.data.get('password', '')
+        password = self.data.get('password', '').strip()
         firstname=self.data.get('first_name', '')
         lastname=self.data.get('last_name', '')
 
@@ -47,8 +49,9 @@ class Register(Action):
         # save artist to db
         artist.save()
 
+        print(user.id)
         return_data = dict(
-            email=email, username=username, first_name=firstname, 
-            last_name=lastname, phone_number=phone_number
+            id=user.id, email=email, username=username,
+            first_name=firstname, last_name=lastname
         )
         return return_data

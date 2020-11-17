@@ -3,16 +3,14 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 
-
 from api.lib.response import Response
 from app.auth.register import Register
-from rest_framework.permissions import AllowAny
-from rest_framework import status
 from app.auth.login import Login
 
 
 class AuthsViewSet(ViewSet):
     permission_classes = [AllowAny]
+
     @action(methods=['post'], detail=False)
     def login(self, request):
         '''Generates a token based on the email and password passed in as parameters.

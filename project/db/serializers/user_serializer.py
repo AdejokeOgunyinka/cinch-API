@@ -16,14 +16,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         email_valid = 'email' in data and data['email']
-        confirm_password = 'confirm_password' in data and data['confirm_password']
-        password_match = data['password'] == data['confirm_password']
-        validate_password(password=data['password'])
+        confirm_password = 'confirm_password' in data and data['confirm_password'].strip()
+        password_match = data['password'].strip() == data['confirm_password'].strip()
+        validate_password(password=data['password'].strip())
 
         errors = {}
         if not confirm_password:
             errors['confirm_password'] = ['field cannot be empty']
-
 
         if not password_match:
             errors['password_match'] = ['Password do not match']

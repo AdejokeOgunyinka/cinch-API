@@ -1,9 +1,8 @@
-# Import base action class
 from django.contrib.auth import get_user_model
 from db.serializers.password_reset_serializer import PasswordResetSerializer
 from app.action import Action
 from app.emails.verify_otp import VerifyOTP
-# Define the action !!!
+from lib.lower_strip import strip_and_lower
 
 
 class ResetPassword(Action):
@@ -12,7 +11,7 @@ class ResetPassword(Action):
 
     def perform(self):
         # Get the user instance in the database with the email address enter by the user, on the view
-        user = get_user_model().objects.filter(email=self.data.get('email'))
+        user = get_user_model().objects.filter(email=strip_and_lower(self.data.get('email', '')))
 
         # Raise an error if there's no user with that email address in the database
         if not user.exists():
@@ -25,9 +24,8 @@ class ResetPassword(Action):
         if not serialize_password.is_valid():
             self.fail(serialize_password.errors)
 
-
         # if there are no errors, verify the otp entered by the user
-        verify_otp_user = VerifyOTP.call(otp_code=self.data['otp_code'])
+        verify_otp_user = VerifyOTP.call(otp_code=self.data.get('otp_code', ''))
 
         # If the otp verification failed, raise the error
         if verify_otp_user.failed:
