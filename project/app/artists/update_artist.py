@@ -18,7 +18,8 @@ class UpdateArtist(Action):
         account = Account.objects.get(artist_id=artist.id)
 
         user = User.objects.get(id=user_id)
-        location = Location.objects.get(id=self.data['location_id'])
+        location = Location.objects.get(country_code=self.data['location_id'])
+        print(location)
 
         data = dict(
             location_id=location.id,
