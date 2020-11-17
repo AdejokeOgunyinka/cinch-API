@@ -8,8 +8,8 @@ from app.action import Action
 from db.models.user import User
 from app.emails.send_otp import SendOTP
 from lib.generate_otp import generate_otp
-from db.serializers.phone_number_serializer import PhoneNumberSerializer
 from db.models.location import Location
+from db.serializers.phone_number_serializer import PhoneNumberSerializer
 
 
 class PhoneOtpAction(Action):
@@ -37,7 +37,7 @@ class PhoneOtpAction(Action):
         location = Location.objects.filter(pk=location_id)
 
         if not location:
-            self.fail(dict(invalid_location_id='Please provide a valid location id'))
+            self.fail(dict(invalid_location_id='Please provide a valid country code'))
         
         phone_number = self.data['phone_number']
         otp = self.otp

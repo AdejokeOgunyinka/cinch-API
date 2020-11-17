@@ -1,4 +1,5 @@
 DROP TABLE db_location CASCADE;
+DROP TABLE db_account;
 DROP TABLE db_artist;
 DROP TABLE django_session;
 DROP TABLE django_migrations;
