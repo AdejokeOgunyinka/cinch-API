@@ -1,4 +1,3 @@
-from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 
@@ -7,7 +6,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from app.artists.update_artist import UpdateArtist
 from api.lib.response import Response
-from rest_framework.authtoken.models import Token
 from payment.account_verification import AccountVerification
 
 class ArtistsViewSet(ViewSet):
@@ -35,9 +33,7 @@ class ArtistsViewSet(ViewSet):
     @action(methods=['put'], detail=False, permission_classes=[IsAuthenticated], url_path='update')
     def update_profile(self, request):
 
-        authorization_token = request.headers.get('Authorization')
-        token = authorization_token.split(' ')[1]
-        user_id = Token.objects.get(key=token).user_id
+        request_email = request.user
         account_details = AccountVerification.call(data=request.data)
 
         if account_details.failed:
@@ -53,7 +49,7 @@ class ArtistsViewSet(ViewSet):
             bank_code=request.data.get('bank_code')
         )
 
-        artist = UpdateArtist.call(data=request.data, user_id=user_id, bank_data=bank_data)
+        artist = UpdateArtist.call(data=request.data, user_email=request_email, bank_data=bank_data)
 
         if artist.failed:
             return Response(errors=artist.error.value, status=status.HTTP_400_BAD_REQUEST)

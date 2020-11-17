@@ -9,17 +9,14 @@ from db.models.location import Location
 
 
 class UpdateArtist(Action):
-    arguments = ['data', 'user_id', 'bank_data']
+    arguments = ['data', 'user_email', 'bank_data']
 
     def perform(self):
 
-        user_id = self.user_id
-        artist = Artist.objects.get(user_id=self.user_id)
+        artist = Artist.objects.get(user_id=self.user_email)
         account = Account.objects.get(artist_id=artist.id)
-
-        user = User.objects.get(id=user_id)
+        user = User.objects.get(email=self.user_email)
         location = Location.objects.get(country_code=self.data['location_id'])
-        print(location)
 
         data = dict(
             location_id=location.id,
