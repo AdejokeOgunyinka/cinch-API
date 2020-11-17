@@ -23,13 +23,13 @@ class ArtistProfile(Action):
         serialize_location = LocationSerializer(location_info)
 
         artist_information = {
-            'email': serialize_user.data['email'],
-            'phone_number': serialize_user.data['phone_number'],
-            'username': serialize_user.data['username'],
-            'location': serialize_location.data['country'],
-            'avatar_url': serialize_artist.data['avatar_url'],
-            'first_name': serialize_artist.data['firstname'],
-            'last_name': serialize_artist.data['lastname']
+            'email': serialize_user.data.get('email', ''),
+            'phone_number': serialize_user.data.get('phone_number', ''),
+            'username': serialize_user.data.get('username', ''),
+            'location': serialize_location.data.get('country', ''),
+            'avatar_url': serialize_artist.data.get('avatar_url', ''),
+            'first_name': serialize_artist.data.get('firstname', ''),
+            'last_name': serialize_artist.data.get('lastname', '')
         }
 
         return dict(artist_profile=artist_information)
