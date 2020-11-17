@@ -13,8 +13,11 @@ class ArtistAccount(Action):
         user = self.user
         user_info = User.objects.get(id=user.id)
         artist_info = Artist.objects.get(user_id=user.id)
-
-        account_info = Account.objects.get(artist_id=artist_info.id)
+        
+        try:
+            account_info = Account.objects.get(artist_id=artist_info.id)
+        except :
+            self.fail(dict(account_error='Please add your account information'))
 
         serialize_user = UserSerializer(user_info)
         serialize_account = AccountSerializer(account_info)
