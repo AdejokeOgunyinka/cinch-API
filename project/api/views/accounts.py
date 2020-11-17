@@ -7,6 +7,7 @@ from api.lib.response import Response
 from payment.get_accounts import GetAccount
 from payment.create_account import CreateAccount
 from payment.account_verification import AccountVerification
+from app.artists.get_artist_account import ArtistAccount
 
 
 class AccountViewSet(ViewSet):
@@ -36,3 +37,15 @@ class AccountViewSet(ViewSet):
 
         return Response(data=save_data.value, status=status.HTTP_201_CREATED)
 
+    @action(methods=['get'], detail=False, url_path='detail')
+    def get_artist_account(self, request):
+        user = request.user
+
+        result = ArtistAccount.call(user=user)
+
+        if result.failed:
+            return Response(
+                errors=result.error.value,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(data=result.value, status=status.HTTP_200_OK)
