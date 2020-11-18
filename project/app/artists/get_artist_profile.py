@@ -14,13 +14,17 @@ class ArtistProfile(Action):
         user = self.user
         artist_info = Artist.objects.get(user_id=user.id)
         user_info = User.objects.get(id=user.id)
-
-        location_id = '+' + str(artist_info.location_id_id)
-        location_info = Location.objects.get(country_code=location_id)
+            
+        try:
+            location_id = artist_info.location_id_id
+            location_info = Location.objects.get(pk=location_id)
+        except:
+            self.fail(dict(invalid_location='user location has not been updated'))
 
         serialize_artist = ArtistSerializer(artist_info)
         serialize_user = UserSerializer(user_info)
         serialize_location = LocationSerializer(location_info)
+            
 
         artist_information = {
             'email': serialize_user.data.get('email', ''),

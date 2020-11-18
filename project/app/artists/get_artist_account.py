@@ -30,4 +30,4 @@ class ArtistAccount(Action):
             'bank_code': serialize_account.data.get('bank_code', '')
         }
 
-        return dict(artist_account=account_information)
+        return account_information

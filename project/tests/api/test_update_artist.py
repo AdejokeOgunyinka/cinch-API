@@ -27,6 +27,7 @@ class TestValidate(APITestCase):
         self.artist = Artist.objects.create(**artist_data)
 
         location_data = {
+            "id" : "234",
             "country_code": "+234",
             "country": "Nigeria"
         }
@@ -36,14 +37,14 @@ class TestValidate(APITestCase):
         self.data = {
             "avatar_url": "https://url.com",
             "phone_number": "+2348123333453",
-            "location_id": "+234"
+            "location_id": "234"
         }
         self.with_first_lastname = {
             "firstname": "Ree",
             "lastname": "Obasy",
             "avatar_url": "https://url.com",
             "phone_number": "+2348123333453",
-            "location_id": "+234"
+            "location_id": "234"
         }
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()

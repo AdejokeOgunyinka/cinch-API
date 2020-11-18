@@ -8,19 +8,13 @@ from app.artists.update_artist import UpdateArtist
 from api.lib.response import Response
 
 class ArtistsViewSet(ViewSet):
-
-    @action(methods=['post'], permission_classes=[AllowAny], detail=False, url_path='*')
-    def create_profile(self, request):
-        data = dict(sample='Create user profile')
-        return Response(data)
-
+    
     @action(methods=['get'], detail=False, url_path='detail')
     def get_artist(self, request):
         """
         This method updates the user's password and returns an appropriate response.
         """
         user = request.user
-
         result = ArtistProfile.call(user=user)
 
         if result.failed:
@@ -29,9 +23,9 @@ class ArtistsViewSet(ViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(data=result.value, status=status.HTTP_200_OK)
+
     @action(methods=['put'], detail=False, permission_classes=[IsAuthenticated], url_path='update')
     def update_profile(self, request):
-
         request_email = request.user
         artist = UpdateArtist.call(data=request.data, user_email=request_email)
 

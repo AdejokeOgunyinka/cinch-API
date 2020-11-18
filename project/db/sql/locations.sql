@@ -1,2 +1,2 @@
-INSERT INTO db_location(country, country_code) VALUES ('Nigeria','+234');
-INSERT INTO db_location(country, country_code) VALUES ('Ghana','+233');
+INSERT INTO db_location(id, country, country_code) VALUES ('234','Nigeria','+234');
+INSERT INTO db_location(id, country, country_code) VALUES ('233','Ghana','+233');
