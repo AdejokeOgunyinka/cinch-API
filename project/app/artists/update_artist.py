@@ -3,14 +3,25 @@ from db.serializers.user_serializer import UpdateUserSerializer
 from app.action import Action
 from db.models.artist import Artist
 from db.models.user import User
+from uploads.upload_interface import UploadInterface
 
 
 class UpdateArtist(Action):
     arguments = ['data', 'user_email']
 
     def perform(self):
+        if not self.data.get('avatar_url', ''):
+            self.fail(dict(invalid_image='Please provide an Image'))
+        avatar = UploadInterface.upload_image(self.data.get('avatar_url'))
+
+        if not avatar:
+            self.fail(dict(invalid_image='Image must have a valid extension'))
+
+        avatar_url = avatar.get('url')
         artist = Artist.objects.get(user_id=self.user_email)
         user = User.objects.get(email=self.user_email)
+
+        self.data['avatar_url'] = avatar_url
 
         artist_serializer = ArtistSerializer(artist, data=self.data, partial=True)
         user_serializer = UpdateUserSerializer(user, data=self.data, partial=True)
@@ -31,9 +42,9 @@ class UpdateArtist(Action):
         success_data = dict(
             first_name=first_name,
             last_name=last_name,
-            location_id=self.data['location_id'],
-            avatar_url=self.data['avatar_url'],
-            phone_number=self.data['phone_number']
+            location_id=self.data.get('location_id'),
+            avatar_url=self.data.get('avatar_url'),
+            phone_number=self.data.get('phone_number')
         )
 
         return success_data

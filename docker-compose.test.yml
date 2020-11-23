@@ -17,6 +17,9 @@ x-api-vars: &api-vars
   TWILIO_AUTH_TOKEN: $${{ secrets.TWILIO_AUTH_TOKEN }}
   TWILIO_NUMBER: $${{ secrets.TWILIO_NUMBER }}
   PAYSTACK_PUBLIC_KEY: $${{ secrets.PAYSTACK_PUBLIC_KEY }}
+  CLOUD_NAME: $${{ secrets.CLOUD_NAME }}
+  API_KEY: $${{ secrets.API_KEY }}
+  API_SECRET: $${{ secrets.API_SECRET }}
 
 services:
   db:
