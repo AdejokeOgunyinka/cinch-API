@@ -3,7 +3,7 @@ from db.serializers.user_serializer import UserSerializer
 from lib.lower_strip import strip_and_lower
 from app.action import Action
 from db.models.artist import Artist
-from app.emails.send_otp import SendOTP
+from db.models.account import Account
 from ..validations.validate_artist import RegisterArtistValidation
 
 
@@ -42,14 +42,21 @@ class Register(Action):
             firstname=firstname,
             lastname=lastname,
         )
-        
+
+        # create account instance
+        account = Account.objects.create(
+            artist_id=artist
+        )
+
         # save user to db
         user.save()
 
         # save artist to db
         artist.save()
 
-        print(user.id)
+        # save account to db
+        account.save()
+
         return_data = dict(
             id=user.id, email=email, username=username,
             first_name=firstname, last_name=lastname
