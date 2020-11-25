@@ -4,13 +4,11 @@ from decouple import config
 from django.core.management.utils import get_random_secret_key
 import cloudinary
 
-
 cloudinary.config(
   cloud_name=config('CLOUD_NAME', default=''),
   api_key=config('API_KEY', default=''),
   api_secret=config('API_SECRET', default='')
 )
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +32,7 @@ ALLOWED_HOSTS = [] if not ALLOWED_HOSTS_STR else ALLOWED_HOSTS_STR.split(',')
 
 INSTALLED_APPS = [
     'rest_framework',
+    'cloudinary',
     'phonenumber_field',
     'rest_framework.authtoken',
     'django.contrib.admin',
