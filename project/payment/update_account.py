@@ -19,8 +19,9 @@ class UpdateAccount(Action):
             self.fail(account_serializer.errors)
 
         success_data = dict(
-            account_number=self.bank_data['account_number'],
-            bank_name=self.bank_data['bank_name']
+            account_name=self.bank_data.get('account_name'),
+            account_number=self.bank_data.get('account_number'),
+            bank_name=self.bank_data.get('bank_name')
         )
 
         return success_data
