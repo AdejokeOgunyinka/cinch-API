@@ -20,6 +20,6 @@ class LocationViewset(ViewSet):
         location = CreateLocation.call(data=request.data)
 
         if location.failed:
-            return Response(errors=location.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=location.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(location.value, status=status.HTTP_201_CREATED)

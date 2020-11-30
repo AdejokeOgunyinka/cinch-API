@@ -21,7 +21,7 @@ class ArtistsViewSet(ViewSet):
 
         if result.failed:
             return Response(
-                errors=result.error.value,
+                errors=dict(errors=result.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(data=result.value, status=status.HTTP_200_OK)
@@ -34,7 +34,7 @@ class ArtistsViewSet(ViewSet):
         result = ArtistDetail.call(artist_id=artist_id)
 
         if result.failed:
-            return Response(errors=result.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=result.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=result.value, status=status.HTTP_200_OK)
 
@@ -44,6 +44,6 @@ class ArtistsViewSet(ViewSet):
         artist = UpdateArtist.call(data=request.data, user_email=request_email)
 
         if artist.failed:
-            return Response(errors=artist.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=artist.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=artist.value, status=status.HTTP_200_OK)

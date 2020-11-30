@@ -22,7 +22,7 @@ class AccountViewSet(ViewSet):
 
         account_details = AccountVerification.call(data=request.data)
         if account_details.failed:
-            return Response(errors=account_details.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=account_details.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         res = account_details.value
         user_data = res.get('data')
@@ -33,7 +33,7 @@ class AccountViewSet(ViewSet):
                                        bank_name=bank_name, bank_code=bank_code, user_id=user_id)
 
         if save_data.failed:
-            return Response(errors=save_data.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=save_data.error.value), status=status.HTTP_400_BAD_REQUEST)
         return Response(data=save_data.value, status=status.HTTP_201_CREATED)
 
     @action(methods=['get'], detail=False, url_path='detail')
@@ -44,7 +44,7 @@ class AccountViewSet(ViewSet):
 
         if result.failed:
             return Response(
-                errors=result.error.value,
+                errors=dict(errors=result.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(data=result.value, status=status.HTTP_200_OK)
@@ -55,7 +55,7 @@ class AccountViewSet(ViewSet):
         account_details = AccountVerification.call(data=request.data)
 
         if account_details.failed:
-            return Response(errors=account_details.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=account_details.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         res = account_details.value
         account_data = res.get('data')
@@ -70,6 +70,6 @@ class AccountViewSet(ViewSet):
         account = UpdateAccount.call(user_email=request_email, bank_data=bank_data)
 
         if account.failed:
-            return Response(errors=account.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=account.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=account.value, status=status.HTTP_200_OK)

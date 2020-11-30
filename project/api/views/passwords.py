@@ -21,7 +21,7 @@ class PasswordsViewSet(ViewSet):
 
         if result.failed:
             return Response(
-                errors=result.error.value,
+                errors=dict(errors=result.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(data=result.value, status=status.HTTP_201_CREATED)
@@ -37,7 +37,7 @@ class PasswordsViewSet(ViewSet):
         # If the action fails, it should return the error with its status
         if result.failed:
             return Response(
-                errors=dict(result.error.value),
+                errors=dict(errors=result.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
 

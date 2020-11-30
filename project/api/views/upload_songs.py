@@ -19,7 +19,7 @@ class UploadSongsViewSet(ViewSet):
         user_email = request.user
         uploads = upload_song_action.UploadSong.call(data=request.data, user_email=user_email)
         if uploads.failed:
-            return Response(errors=dict(error=uploads.error.value),
+            return Response(errors=dict(errors=uploads.error.value),
                 status = status.HTTP_400_BAD_REQUEST
             )
 

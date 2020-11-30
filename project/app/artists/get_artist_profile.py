@@ -14,7 +14,7 @@ class ArtistProfile(Action):
         user = self.user
         artist_info = Artist.objects.get(user_id=user.id)
         user_info = User.objects.get(id=user.id)
-            
+
         try:
             location_id = artist_info.location_id_id
             location_info = Location.objects.get(pk=location_id)

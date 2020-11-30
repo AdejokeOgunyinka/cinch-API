@@ -21,7 +21,7 @@ class AuthsViewSet(ViewSet):
         login_details = Login.call(data=request.data)
         if login_details.failed:
             return Response(
-                errors=login_details.error.value,
+                errors=dict(errors=login_details.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
         return Response(
@@ -35,7 +35,7 @@ class AuthsViewSet(ViewSet):
         
         if artist.failed:
             return Response(
-                errors=artist.error.value,
+                errors=dict(errors=artist.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
 

@@ -22,7 +22,7 @@ class OtpsViewSet(ViewSet):
         if otp.value:
             return Response(data={"otp": otp.value}, status=status.HTTP_201_CREATED)
         else:
-            return Response(errors={"error": otp.error.value}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors={"error": otp.error.value}), status=status.HTTP_400_BAD_REQUEST)
             
     @action(methods=['post'], detail=False)
     def verify(self, request):
@@ -33,7 +33,7 @@ class OtpsViewSet(ViewSet):
 
         if verify_email.failed:
             return Response(
-                errors=verify_email.error.value,
+                errors=dict(errors=verify_email.error.value),
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -46,6 +46,6 @@ class OtpsViewSet(ViewSet):
         send_otp = PhoneOtpAction.call(otp=otp, data=data)
 
         if send_otp.failed:
-            return Response(errors=send_otp.error.value, status=status.HTTP_400_BAD_REQUEST)
+            return Response(errors=dict(errors=send_otp.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=send_otp.value, status=status.HTTP_200_OK)
