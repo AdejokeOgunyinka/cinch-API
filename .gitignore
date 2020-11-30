@@ -12,4 +12,4 @@ __pycache__/
 
 # [Project]
 project/staticfiles
-project/db/migrations/
+# project/db/migrations/
