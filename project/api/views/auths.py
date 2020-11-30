@@ -1,9 +1,12 @@
-from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework import status
 
 from api.lib.response import Response
+from api.permissions.admin_permissions import IsUserAdmin
+
+from app.admin.register_admin_action import RegisterAdmin
 from app.auth.register import Register
 from app.auth.login import Login
 
@@ -38,5 +41,20 @@ class AuthsViewSet(ViewSet):
 
         return Response(
             data=artist.value, 
+            status=status.HTTP_201_CREATED
+        )
+
+    @action(methods=['post'], detail=False, permission_classes=[IsUserAdmin], url_path='register/admin')
+    def register_admin(self, request):
+        admin = RegisterAdmin.call(data=request.data)
+
+        if admin.failed:
+            return Response(
+                errors=dict(error=admin.error.value),
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            data=admin.value,
             status=status.HTTP_201_CREATED
         )
