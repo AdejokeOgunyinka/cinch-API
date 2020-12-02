@@ -30,7 +30,8 @@ class RegisterAdmin(Action):
             email=email,
             username = username,
             password = password,
-            email_verified=True
+            email_verified=True,
+            is_admin=True
         )
         user.set_password(password)
 
