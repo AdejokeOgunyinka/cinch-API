@@ -2,13 +2,9 @@ import dj_database_url
 from pathlib import Path
 from decouple import config
 from django.core.management.utils import get_random_secret_key
-import cloudinary
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
-cloudinary.config(
-  cloud_name=config('CLOUD_NAME', default=''),
-  api_key=config('API_KEY', default=''),
-  api_secret=config('API_SECRET', default='')
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,6 +14,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
+
+if DEBUG is False:
+    sentry_sdk.init(
+        dsn=config('DSN'),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True,
+
+        release=config('RELEASE_VERSION', default="cinch1.0")
+
+    )
 
 WHITENOISE_AUTOREFRESH = True
 
@@ -32,7 +41,6 @@ ALLOWED_HOSTS = [] if not ALLOWED_HOSTS_STR else ALLOWED_HOSTS_STR.split(',')
 
 INSTALLED_APPS = [
     'rest_framework',
-    'cloudinary',
     'phonenumber_field',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -46,9 +54,9 @@ INSTALLED_APPS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':
-    ('rest_framework.authentication.TokenAuthentication', ),
+        ('rest_framework.authentication.TokenAuthentication',),
     'DEFAULT_PERMISSION_CLASSES':
-    ('rest_framework.permissions.IsAuthenticated', ),
+        ('rest_framework.permissions.IsAuthenticated',),
 }
 
 # Paystack Settings
@@ -102,11 +110,11 @@ DATABASES = {'default': dj_database_url.config(conn_max_age=60)}
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
         'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -137,4 +145,3 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default="dummy-password")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-

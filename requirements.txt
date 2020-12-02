@@ -18,9 +18,9 @@ PyJWT==1.7.1
 python-decouple==3.3
 pytz==2020.1
 requests==2.24.0
+sentry-sdk==0.19.4
 six==1.15.0
 sqlparse==0.4.1
 twilio==6.46.0
 urllib3==1.25.11
 whitenoise==5.2.0
-cloudinary

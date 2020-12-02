@@ -1,13 +1,11 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
-from app.uploads import upload_song_action, upload_image
+from app.uploads import upload_song_action
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from api.lib.response import Response
-from uploads.upload_interface import UploadInterface
 
-import cloudinary.uploader
 
 class UploadSongsViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
