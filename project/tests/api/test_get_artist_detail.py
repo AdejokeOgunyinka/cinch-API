@@ -7,7 +7,7 @@ from db.models.location import Location
 from rest_framework.authtoken.models import Token
 
 
-class TestGetAccounts(APITestCase):
+class TestGetArtistDetail(APITestCase):
     def setUp(self):
 
         user_data = {
