@@ -8,6 +8,7 @@ from .views import (
     BankListViewSet,
     AccountViewSet,
     UploadSongsViewSet,
+    DataAnalyticsViewSet,
 )
 
 router = SimpleRouter(trailing_slash=False)
@@ -27,5 +28,7 @@ router.register(r'artists', ArtistsViewSet, basename='artists')
 #upload Routes
 router.register(r'upload_song', UploadSongsViewSet, basename='upload_song')
 
-urlpatterns = router.urls
+#Data Analytics Route
+router.register(r'analytics', DataAnalyticsViewSet, basename='analytics')
 
+urlpatterns = router.urls
