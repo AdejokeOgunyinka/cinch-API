@@ -41,4 +41,3 @@ class TestAnalyticsEndpoint(APITestCase):
         url = reverse('analytics-app-data')
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
