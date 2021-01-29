@@ -1,15 +1,16 @@
-FROM python:3.9.0-alpine as base
+FROM python:3.9.0 as base
 
 # Setup base image with require tools
 
-RUN apk update && apk add \
-  bash \
-  curl \
-  postgresql-dev \
-  gcc \
-  python3-dev \
-  musl-dev \
-  wait4ports
+# RUN apk update && apk add \
+#   bash \
+#   curl \
+#   postgresql-dev \
+#   gcc \
+#   python3-dev \
+#   musl-dev \
+#   wait4ports \
+#   zlib
 
 # Add environment variables
 

@@ -2,6 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 from app.artists.get_artist_profile import ArtistProfile
 from app.admin.get_artist_detail import ArtistDetail
+from app.artists.get_artists import AllArtists
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from api.permissions.admin_permissions import IsUserAdmin
 from rest_framework import status
@@ -47,3 +48,14 @@ class ArtistsViewSet(ViewSet):
             return Response(errors=dict(errors=artist.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=artist.value, status=status.HTTP_200_OK)
+    
+    @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated], url_path='all-artists')
+    def get_all_artists(self, request):
+        """
+            This method gets all the details of all artists
+        """
+        result = AllArtists.call()
+        if result.failed:
+            return Response(errors=dict(errors=result.error.value), status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data=result.value, status=status.HTTP_200_OK)
