@@ -2,12 +2,14 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.decorators import action
 from app.artists.get_artist_profile import ArtistProfile
 from app.admin.get_artist_detail import ArtistDetail
+from app.admin.artists_monthly_song import ArtistSongPerMonth
 from app.artists.get_artists import AllArtists
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from api.permissions.admin_permissions import IsUserAdmin
 from rest_framework import status
 from app.artists.update_artist import UpdateArtist
 from api.lib.response import Response
+from db.models.artist import Artist
 
 
 class ArtistsViewSet(ViewSet):
@@ -59,3 +61,16 @@ class ArtistsViewSet(ViewSet):
             return Response(errors=dict(errors=result.error.value), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(data=result.value, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False, permission_classes=[IsUserAdmin, IsAuthenticated], url_path='analytics/(?P<artist_id>[0-9a-f\-]{32,})/')
+    def get_artist_analytics_via_id(self, request, artist_id):
+        """
+            This method gets the data analytics of a specific artist using their ID.
+        """
+        info = ArtistSongPerMonth.call(artist_id=artist_id)
+
+        if info.failed:
+            return Response(errors=dict(errors=info.error.value), status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(data=info.value, status=status.HTTP_200_OK)
+
