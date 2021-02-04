@@ -14,7 +14,8 @@ class ArtistDetail(Action):
         user = User.objects.get(email=artist.user_id)
         song_count = artist.number_of_songs
 
-        sum_streams = Song.objects.filter(artist_id=artist.id).aggregate(Sum('number_of_streams'))
+        sum_streams = Song.objects.filter(
+            artist_id=artist.id).aggregate(Sum('number_of_streams'))
         total_streams = sum_streams.get('number_of_streams__sum')
 
         try:
@@ -30,7 +31,8 @@ class ArtistDetail(Action):
             'phone_number': str(user.phone_number),
             'number_of_songs_uploaded': song_count,
             'number_of_streams': total_streams,
-            'location': location
+            'location': location,
+            'avatar':artist.avatar_url,
         }
 
         return artist_data
